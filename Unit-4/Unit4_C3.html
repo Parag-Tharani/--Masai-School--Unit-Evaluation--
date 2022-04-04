@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Expense Tracker</title>
+
+    <style>
+
+    #box{
+        height: 700px;
+        width:30%;
+        margin:auto;
+        box-shadow: rgba(115, 215, 92, 0.4) 0px 7px 29px 0px;
+        margin-bottom: 40px;
+    }
+
+    #box>h1{
+        margin-left:26%;
+        padding-top: 20px;
+        font-size: 36px;
+        margin-bottom: 80px;
+    }
+
+    .selectInfo{
+        font-size: 35px;
+        margin-left: 20px;
+    }
+
+    #select,#input2,#input3{
+        width:80%;
+        height:40px;
+        margin-left: 10%;
+        margin-top:15px;
+        margin-bottom:40px;
+        font-size: 20px;
+        border-radius: 10px;
+        
+    }
+
+    #sButton{
+        width:80%;
+        margin-left:10%;
+        margin-top:40px;
+        height:80px;
+        border-radius: 20px;
+        background-color: rgba(50, 84, 60, 0.769);
+        font-size: 30px;
+        color:white;
+        box-shadow: rgba(115, 215, 92, 0.4) 0px 7px 29px 0px;
+    }
+
+    #boxB{
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        gap:50px;
+        width:80%;
+        margin:auto;
+    }
+
+    #boxB>div{
+        height:300px;
+        margin-top: 20px; 
+        box-shadow: rgba(115, 215, 92, 0.4) 0px 7px 29px 0px;
+    }
+
+    #boxB>div>h1{
+        margin-left: 10px;
+        color: rgb(37, 67, 30);
+    }
+
+    #boxB>div>p{
+        font-size: 20px;
+        margin-left: 10px;
+        color:rgb(115, 215, 92) ;
+    }
+
+    </style>
+
+</head>
+<body>
+    <div id="box">
+        <h1>Expense Tracker</h1>
+        <form id="form">
+            <label class="selectInfo">Select Month</label><br>
+            <select id="select">
+                <option value="Please Select a Month">Select Month</option>
+                <option value="January">January</option>
+                <option value="Febuary">Febuary</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="Octomber">Octomber</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+            </select><br>
+            <label class="selectInfo">Income</label><br>
+            <input type="number" id="input2"><br>
+            <label class="selectInfo">Expense</label><br>
+            <input type="number" id="input3"><br>
+            <input type="submit" id="sButton">
+        </form>
+    </div>
+    <div id="boxB"></div>
+</body>
+<script>
+
+    document.querySelector("#sButton").addEventListener("click",myevent)
+
+
+    function myevent(){
+        event.preventDefault();
+
+    var h1 = document.createElement("h1")
+    h1.innerText = document.getElementById("select").value;
+
+    var p1 = document.createElement("p")
+    p1.innerText= "Your Income is Rs" +" " + document.getElementById("input2").value;
+
+    var p2 = document.createElement("p")
+    p2.innerText= "Your Expense is Rs" +" " + document.getElementById("input3").value;
+
+    var p3 = document.createElement("p")
+    var saving = document.getElementById("input2").value - document.getElementById("input3").value
+    p3.innerText= "Your Saving is Rs" +" " + saving
+
+    var newDiv = document.createElement('div')
+    newDiv.append(h1,p1,p2,p3)
+
+    document.getElementById("boxB").append(newDiv)
+    }
+
+</script>
+</html>
