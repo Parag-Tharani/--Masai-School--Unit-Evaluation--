@@ -5,65 +5,93 @@
     <style>
 
         #pare{
-            display:flex;
+            display: flex;
+            justify-content: space-evenly;
+            font-size: 25px;
+            box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+        }
+        h1>a{
+            text-decoration: none;
+            color: rgb(103, 82, 82)
         }
 
-        #child{
-            
+        #pare1{
+            display: flex;
+            margin-top: 100px;
+            margin-left:30%;
+        }
+        #pare1>.child{
+            width:180px;
+            height: 80px;
+            padding-top: 23px;
+            padding-left: 10px;
+            margin-left: 10px;
+            font-size: 40px;
+            background-color: rgb(103, 82, 82);
         }
 
-        #child>div{
-            display:flex;
+        #pare1>.child>div{
+            width:95%;
+            height: 80px;
+            font-size: 30px;
+            margin-top: 60px;
         }
+
+        #pare1>.child>button{
+            width:95%;
+            height: 80px;
+            font-size: 20px;
+            margin-top: 50px;
+            color:rgb(103, 82, 82);
+            background-color: white;
+            border: 0ch;
+        }
+        
     </style>
 </head>
 <body>
     <div id="pare">
-        <div>Name</div>
-        <div>Number</div>
-        <div>Type</div>
-        <div>Favourite</div>
+        <div><h1> <a href="index.html">Home</a></h1></div>
+        <div><h1><a href="contact_list.html" >Contact List</a></h1></div>
+        <div><h1><a href="favourite.html">Favourite</a></h1></div>
     </div>
-    <div id="child"></div>
+
+    <div id="pare1">
+        <div class="child" id="child1">Name</div>
+        <div class="child" id="child2">Number</div>
+        <div class="child" id="child3">Type</div>
+        <div class="child" id="child4">Favourites</div>
+    </div>
 </body>
 <script>
     var contactData = JSON.parse(localStorage.getItem("contactList"))
-    
-    var favourites;
-    if(localStorage.getItem("favourites") === null){
-        favourites = [];
-    }else{
-        favourites = JSON.parse(localStorage.getItem("favourites"))
-    }
 
     contactData.forEach(data => {
     
-    var box = document.createElement('div')
 
-    var name = document.createElement('p')
+    var name = document.createElement('div')
     name.innerText = data.name;
 
-    var number = document.createElement('p')
+    var number = document.createElement('div')
     number.innerText = data.number;
 
-    var type = document.createElement('p')
+    var type = document.createElement('div')
     type.innerText = data.type;
 
     var fav = document.createElement("button")
-    fav.innerText = "Add to fav"
+    fav.innerText = "Add to favourites"
 
-    fav.addEventListener("click",function(){
-        addtofav(data)
-    })
-
-    box.append(name,number,type,fav)
-    document.querySelector("#child").append(box)
+    document.querySelector("#child1").append(name)
+    document.querySelector("#child2").append(number)
+    document.querySelector("#child3").append(type)
+    document.querySelector("#child4").append(fav)
    
+    
+    fav.addEventListener("click",addtofav(data))
 });
 
 function addtofav(data){
-    localStorage.setItem("favourites",JSON.stringify(contactData))
-    alert("added to favourites")
+    
 }
 </script>
 </html>
