@@ -1,9 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Document</title>
+    <title>Masai Contact List</title>
+
+    <style>
+        #pare{
+            display: flex;
+            justify-content: space-evenly;
+            font-size: 25px;
+            color:rgb(108, 70, 70);
+            box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+        }
+
+        
+    </style>
+
 </head>
 <body>
-    
+    <div id="pare">
+        <div><h1> <a href="index.html">Home</a></h1></div>
+        <div><h1><a href="contact_list.html" >Contact List</a></h1></div>
+        <div><h1><a href="favourite.html">Favourite</a></h1></div>
+    </div>
+    <div id="pare2">
+        <h2>Enter Your Contact Details</h2>
+        <form id="form">
+        <label>Name:</label><input type="text" id="text">
+        <label>Contact No. :</label><input type="number" id="number">
+        <label>Relation:</label>
+        <select id="type">
+            <option value="">Select Type</option>
+            <option value="family">Family</option>
+            <option value="friend">Friend</option>
+            <option value="other">Other</option>
+        </select>
+        <input type="submit" placeholder="Submit" id="submit">
+    </form>
+    </div>
 </body>
+<script>
+    document.querySelector("#submit").addEventListener("click",registerFn)
+
+    var contactList;
+    if(localStorage.getItem("contactList") === null){
+        contactList = [];
+    }else{
+        contactList = JSON.parse(localStorage.getItem("contactList"))
+    }
+
+
+    function registerFn(){
+        event.preventDefault();
+
+        var obj = {
+        name: document.querySelector("#text").value,
+        number: document.querySelector("#number").value,
+        type: document.querySelector("#type").value
+        }
+
+        contactList.push(obj)
+
+        localStorage.setItem("contactList",JSON.stringify(contactList))
+        alert("Added Contact to  your ContactList")
+    }
+</script>
 </html>

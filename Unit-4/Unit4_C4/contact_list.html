@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Contact List</title>
+    <style>
+
+        #pare{
+            display:flex;
+        }
+
+        #child{
+            
+        }
+
+        #child>div{
+            display:flex;
+        }
+    </style>
+</head>
+<body>
+    <div id="pare">
+        <div>Name</div>
+        <div>Number</div>
+        <div>Type</div>
+        <div>Favourite</div>
+    </div>
+    <div id="child"></div>
+</body>
+<script>
+    var contactData = JSON.parse(localStorage.getItem("contactList"))
+    
+    var favourites;
+    if(localStorage.getItem("favourites") === null){
+        favourites = [];
+    }else{
+        favourites = JSON.parse(localStorage.getItem("favourites"))
+    }
+
+    contactData.forEach(data => {
+    
+    var box = document.createElement('div')
+
+    var name = document.createElement('p')
+    name.innerText = data.name;
+
+    var number = document.createElement('p')
+    number.innerText = data.number;
+
+    var type = document.createElement('p')
+    type.innerText = data.type;
+
+    var fav = document.createElement("button")
+    fav.innerText = "Add to fav"
+
+    fav.addEventListener("click",function(){
+        addtofav(data)
+    })
+
+    box.append(name,number,type,fav)
+    document.querySelector("#child").append(box)
+   
+});
+
+function addtofav(data){
+    localStorage.setItem("favourites",JSON.stringify(contactData))
+    alert("added to favourites")
+}
+</script>
+</html>
