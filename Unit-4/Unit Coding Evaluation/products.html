@@ -17,13 +17,13 @@
     </div>
     <h3>Sorting</h3>
     <label>Sort by Price</label>
-    <select>
+    <select id="sortPrice">
         <option>Relevent</option>
         <option value="lowtohigh">Low to High</option>
         <option value="hightolow">High to Low</option>
     </select>
     <label>Sort by Rating</label>
-    <select>
+    <select id="sortRating">
         <option>None</option>
         <option value="lowtohigh">Low to High</option>
         <option value="hightolow">High to Low</option>
@@ -108,9 +108,37 @@
   }
 
 
+  var sortType = document.querySelector("#sortPrice").addEventListener("change",function(){
+      var sort1 = document.querySelector("#sortPrice").value
+      data.sort(function(a,b){
+          if(sort1 == "lowtohigh"){
+              return a.price - b.price
+          }else if(sort1 == "hightolow"){
+              return b.price - a.price
+          }else{
+              window.location.reload()
+          }
+      });
+      displayData(data);
+  });
+
+  var sortType = document.querySelector("#sortRating").addEventListener("change",function(){
+      var sort2 = document.querySelector("#sortRating").value
+      data.sort(function(a,b){
+          if(sort2 == "lowtohigh"){
+              return a.rating - b.rating
+          }else if(sort2 == "hightolow"){
+              return b.rating - a.rating
+          }else{
+            window.location.reload()
+          }
+      });
+      displayData(data);
+  });
 
 
     function displayData(){
+        document.querySelector("#container").innerHTML = " ";
 
         data.forEach(Data => {
             
