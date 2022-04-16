@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <h1>Cart</h1>
+    <div id="container">
+
+    </div>
+    <h3 id="price"></h3>
+    <label>coupon code:</label>
+    <input id="promocode">
+    <button id="button">Enter</button><br>
+    <a href="./checkout.html"><button> Checkout</button></a>
+</body>
+<script>
+
+var cartData = JSON.parse(localStorage.getItem("productData"))
+
+var totalSum = cartData.reduce(function(sum,ele,index,arr){
+    return sum + Number(ele.price);
+},0)
+document.querySelector("#price").innerText = "cartTotal = $" + totalSum
+
+document.querySelector("#button").addEventListener("click",function(){
+
+    if(document.querySelector("#promocode").value === "masai30"){
+        document.querySelector("#price").innerText = "cartTotal = $" + totalSum*0.7
+    }else{
+        document.querySelector("#price").innerText = "cartTotal = $" + totalSum
+        alert("wrong promocode")
+    }
+})
+
+cartData.forEach(function(Data,index){
+            
+            var box = document.createElement("div")
+
+            var name = document.createElement("h3")
+            name.innerText = Data.name
+
+            var img = document.createElement("img")
+            img.src = Data.image_url
+
+            var rating = document.createElement("p")
+            rating.innerText = Data.rating
+
+            var price = document.createElement("p")
+            price.innerText = Data.price
+
+            var button = document.createElement("button")
+            button.innerText = "remove from cart"
+
+            button.addEventListener("click",function(){
+                cartData.splice(index,1)
+                localStorage.setItem("productData",JSON.stringify(cartData))
+                window.location.reload()
+            })
+
+            box.append(img,name,price,rating,button)
+
+            document.querySelector("#container").append(box)
+        });
+
+</script>
+</html>
