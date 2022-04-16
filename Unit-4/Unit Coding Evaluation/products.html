@@ -98,15 +98,7 @@
       price: 149999,
     },
   ];
-    
-
-  var cartData;
-  if(localStorage.getItem("productData") === null){
-      cartData= [];
-  }else{
-      cartData = localStorage.getItem("productData")
-  }
-
+ 
 
   var sortType = document.querySelector("#sortPrice").addEventListener("change",function(){
       var sort1 = document.querySelector("#sortPrice").value
@@ -136,9 +128,15 @@
       displayData(data);
   });
 
+  var cartData;
+  if(localStorage.getItem("productData") === null){
+      cartData= [];
+  }else{
+      cartData = localStorage.getItem("productData")
+  }
 
-    function displayData(){
-        document.querySelector("#container").innerHTML = " ";
+    function displayData(data){
+    document.querySelector("#container").innerHTML = "";
 
         data.forEach(Data => {
             
@@ -173,6 +171,6 @@
             localStorage.setItem("productData",JSON.stringify(cartData))
             }
     }
-    displayData();
+    displayData(data);
 </script>
 </html>
