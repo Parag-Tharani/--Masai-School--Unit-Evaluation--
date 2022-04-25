@@ -99,6 +99,12 @@
     },
   ];
  
+  var cartData;
+  if(localStorage.getItem("productData") === null){
+      cartData= [];
+  }else{
+      cartData = localStorage.getItem("productData")
+  }
 
   var sortType = document.querySelector("#sortPrice").addEventListener("change",function(){
       var sort1 = document.querySelector("#sortPrice").value
@@ -127,13 +133,6 @@
       });
       displayData(data);
   });
-
-  var cartData;
-  if(localStorage.getItem("productData") === null){
-      cartData= [];
-  }else{
-      cartData = localStorage.getItem("productData")
-  }
 
     function displayData(data){
     document.querySelector("#container").innerHTML = "";
