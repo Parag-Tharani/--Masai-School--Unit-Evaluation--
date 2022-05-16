@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brewery</title>
+    
+    <style>
+
+        #container1{
+            width: 102%;
+            height: 70px;
+            position: fixed;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgb(219, 196, 61);
+            margin-left: -10px;
+            margin-top: -10px;
+        }
+        #container1>#logo{
+            font-size: 40px;
+            margin-left: 90px;
+            font-family: cursive;
+            color: rgb(255, 255, 255);
+        }
+        #container1>#rightNav{
+            margin-right: 130px;
+            font-size: 23px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        #container1>#rightNav>a{
+            text-decoration: none;
+            margin-left: 40px;
+            color: rgb(246, 246, 244);
+        }
+
+        #h2{
+            display: flex;
+            justify-content: center;
+            padding-top: 100px;
+            font-size: 30px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+
+        #slabel{
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        #slabel>#sorting{
+            margin-left: 10px;
+            width: 150px;
+        }
+
+
+
+        #table{
+            margin: auto;
+            padding-left: 50px;
+        }
+        .th{
+            font-size: 20px;
+            padding-bottom: 20px;
+            padding-right: 90px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container1">
+        <div id="logo">Brewery</div>
+        <div id="rightNav">
+            <a href="./home.html">Home</a>
+            <a href="./search.html">Search</a>
+        </div>
+    </div>
+    <div id="h2"><h2>Available Brewery</h2></div>
+
+    <div id="slabel">
+    <label>Sort By Type:</label>
+    <select id="sorting">
+    <option value="none">Relevant</option>
+    <option value="planning">Planning</option>
+    <option value="micro">Micro</option>
+    </select>
+</div>
+
+    <table id="table">
+        <tr>
+        <th class="th">Name</th>
+        <th class="th">Brewery Type</th>
+        <th class="th">City</th>
+        <th class="th">Country</th>
+        <th class="th">More Details</th>
+        </tr>
+    </table>
+</body>
+<script>
+
+    async function getData(){
+        try {
+        let res = await fetch(`https://api.openbrewerydb.org/breweries`)
+        let data = await res.json();
+
+        displayData(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    getData();
+
+
+    var table = document.querySelector("#table")
+    function displayData(data){
+        data.forEach(brewData => {
+
+            var trow = document.createElement("tr");
+
+            var id = brewData.id
+
+            var name = document.createElement("td")
+            name.innerText = brewData.name
+
+            var type = document.createElement("td")
+            type.innerText = brewData.brewery_type
+
+            var city = document.createElement("td")
+            city.innerText = brewData.city
+
+            var country = document.createElement("td")
+            country.innerText = brewData.country
+
+            var btn = document.createElement("button")
+            btn.innerText = "More Details"
+
+            trow.append(name,type,city,country,btn)
+            table.append(trow);
+
+            btn.onclick = function(){
+                buttonFn(id)
+            }
+        });
+    }
+
+    function buttonFn(id){
+        localStorage.setItem("brewid",id);
+        location.href = "ind.html"
+    }
+</script>
+</html>
