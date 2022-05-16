@@ -92,13 +92,23 @@
     <div id="search">
         <label>Search</label>
         <div id="sear1">
-        <input type="search" placeholder="Type To Search..." oninput=fetchData() id="searId">
+        <input type="search" placeholder="Type To Search..." oninput=debounce(fetchData,1000) id="searId">
         <div id="sear2"></div>
     </div>
     </div>
 </body>
 
 <script>
+
+    var timeid;
+    function debounce(fdfn,wait){
+
+        if(timeid){
+            clearTimeout()
+        }
+
+        timeid = setTimeout(fdfn,wait)
+    }
 
     async function fetchData(){
         try {
