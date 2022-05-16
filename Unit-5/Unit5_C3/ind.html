@@ -35,6 +35,18 @@
             margin-left: 40px;
             color: rgb(246, 246, 244);
         }
+
+
+        #container2{
+            position: absolute;
+            top:35%;
+            left: 35%;
+            width: 400px;
+            border: 1px solid black;
+            padding: 10px;
+            background-color: rgb(222, 222, 193);
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -45,5 +57,52 @@
             <a href="./search.html">Search</a>
         </div>
     </div>
+
+    <div id="container2"></div>
 </body>
+<script>
+    var brewId = localStorage.getItem("brewid")
+    
+    async function fetchData(brewData){
+        try {
+        let res = await fetch(`https://api.openbrewerydb.org/breweries/${brewData}`)
+        let data = await  res.json();
+
+        displayData(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    fetchData(brewId);
+
+
+    var container2 = document.querySelector("#container2")
+    function displayData(data){
+
+        var box = document.createElement("div")
+
+        var name = document.createElement("h2")
+        name.innerText = data.name
+
+
+        var line = document.createElement("hr")
+
+        var type = document.createElement("p")
+        type.innerText = "Type: " +data.brewery_type
+        
+        var address = document.createElement("p")
+        address.innerText = "Address: " + data.street + ", " + data.city + ", " + data.state + ", " + data.country
+
+        var number = document.createElement("p")
+        number.innerText = "Phone Number: " + data.phone;
+
+        var website = document.createElement("a")
+        website.innerText = "Website: " + data.website_url
+
+        box.append(name,line,type,address,number,website);
+        container2.append(box)
+
+        console.log(data)
+    }
+</script>
 </html>
