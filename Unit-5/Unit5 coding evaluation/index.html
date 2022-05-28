@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <style>
+
+        #h1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 38px;
+        }
+        h3{
+            display: flex;
+            justify-content: center;
+        }
+
+        #inputDetails{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 500px;
+            height: 150px;
+            margin: auto;
+            margin-top: 70px;
+            border-radius: 10px;
+            border: 1px solid rgba(198, 190, 190, 0.345);
+        }
+        #inputDetails>div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #inputDetails>div>#inputBox{
+            width: 300px;
+            height: 20px;
+            outline: none;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 3px;
+            border: 1px solid rgb(60, 58, 58);
+        }
+        #inputDetails>div>#checkBox{
+            width: 43px;
+            height: 43px;
+            margin-left: 20px;
+        }
+
+        #inputDetails>button{
+            width: 150px;
+            height: 35px;
+            border-radius: 13px;
+            background-color: rgb(160, 212, 170);
+            border: none;
+            font-weight: 800;
+            font-size: 20px;
+            margin-top: 30px;
+        }
+
+        #msg{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+
+        #displayData{
+            display: flex;
+            flex-direction: column;
+            justify-content: left;
+            align-items: center;
+            margin-top: 50px;
+        }
+        #displayData>div{
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        .true{
+            color: green;
+        }
+        .false{
+            color: red;
+        }
+        #displayData>div>button{
+            width: 100px;
+            height: 30px;
+            border: none;
+            color: white;
+            font-size: 16px;
+            background-color: rgb(146, 129, 161);
+            border-radius: 10px;
+            margin-left: 20px;
+        }
+
+        *{
+            text-decoration: none;
+            font-family:cursive;
+        }
+    </style>
+</head>
+<body onload="fetchData()">
+    <h1 id="h1">To Do tasks</h1>
+    <h3>Want to search for a particular task: <a href="./search.html">Click here</a></h3>
+    <div id="inputDetails">
+        <div>
+        <input id="inputBox" type="text">
+        <input id="checkBox" type="checkbox">
+        </div>
+        <button id="button" onclick="addFn()">Add</button>
+    </div>
+    <div id="msg">(Click on the Tasks to edit Info)</div>
+    <div id="displayData"></div>
+    </div>
+</body>
+<script>
+
+    async function fetchData(){
+        try {
+            let res = await fetch(`http://localhost:3000/tasks`);
+            let data = await res.json()
+
+            displayData(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    function displayData(data){
+        document.getElementById("displayData").innerHTML = ""
+
+        data.forEach(dodata => {
+            var box = document.createElement("div")
+            var id = dodata.id
+            var p = document.createElement("p")
+            p.innerText = dodata.title
+            p.onclick = function(){
+                localStorage.setItem("todoid",id)
+                window.location.href="./edit.html"
+            }
+
+            if(dodata.status){
+                p.classList.add('true')
+            }else{
+                p.classList.add("false")
+            }
+
+            var button = document.createElement("button")
+            button.innerText = "Delete"
+            button.onclick = async function(){
+                let res = await fetch(`http://localhost:3000/tasks/${id}`,{
+                method:"DELETE",
+                headers:{
+                    "Content-type": "application/json"
+                }
+            })
+            }
+            box.append(p,button)
+            document.getElementById("displayData").append(box)
+        });
+    }
+
+
+    async function addFn(){
+
+        try {
+            if(document.getElementById("inputBox").value != ""){
+            var boolean;
+            if(document.getElementById("checkBox").checked){
+                boolean = true
+            }else{
+                boolean = false
+            }
+
+        let body = {
+            title: document.getElementById("inputBox").value,
+            status: boolean
+        }
+
+        let res = await fetch(`http://localhost:3000/tasks`,{
+            method:"POST",
+            body: JSON.stringify(body),
+            headers:{
+                "Content-type": "application/json"
+            }
+        })
+    }else{
+        document.getElementById("inputBox").placeholder = "Please Enter Task"
+    }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+</script>
+</html>
