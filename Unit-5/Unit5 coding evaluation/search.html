@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <style>
+
+        #h1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #input{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #input>input{
+            width: 200px;
+            height: 30px;
+            border-radius: 4px;
+        }
+        #input>button{
+            width: 100px;
+            height: 35px;
+            border: none;
+            color: white;
+            font-weight: 800;
+            background-color: rgb(185, 158, 210);
+            border-radius: 3px;
+        }
+
+        #displayData{
+            display: flex;
+            flex-direction: column;
+            justify-content: left;
+            align-items: center;
+            margin-top: 50px;
+        }
+        #displayData>div{
+            display: flex;
+            flex-direction: column;
+            justify-content: left;
+            align-items: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        *{
+            font-family:cursive;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="h1">Search List</h1>
+    <div id="input">
+        <input type="number" placeholder="Search by ID" id="title"><button onclick="fetchData()">Search</button>
+    </div>
+    <div id="displayData">
+        <div>
+            <p id="listName"></p>
+            <p id="status"></p>
+        </div>
+    </div>
+</body>
+<script>
+    async function fetchData(){
+        var id = document.getElementById("title").value
+        try {
+            let res = await fetch(`http://localhost:3000/tasks/${id}`);
+            let data = await res.json()
+
+            document.getElementById("listName").innerText = data.title;
+            document.getElementById("status").innerText = "Status: " + data.status;
+        } catch (error) {
+            console.log(error)
+        }
+    }
+</script>
+</html>

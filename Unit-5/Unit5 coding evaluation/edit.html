@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit</title>
+    <style>
+        h2{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #inputDetails{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 500px;
+            height: 150px;
+            margin: auto;
+            margin-top: 70px;
+            border-radius: 10px;
+            border: 1px solid rgba(198, 190, 190, 0.345);
+        }
+        #inputDetails>div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #inputDetails>div>#inputBox{
+            width: 300px;
+            height: 20px;
+            outline: none;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 3px;
+            border: 1px solid rgb(60, 58, 58);
+        }
+        #inputDetails>div>#checkBox{
+            width: 43px;
+            height: 43px;
+            margin-left: 20px;
+        }
+
+        #inputDetails>button{
+            width: 150px;
+            height: 35px;
+            border-radius: 13px;
+            background-color: rgb(160, 212, 170);
+            border: none;
+            font-weight: 800;
+            font-size: 20px;
+            margin-top: 30px;
+        }
+
+        *{
+            font-family:cursive;
+        }
+    </style>
+</head>
+<body onload="fetchData()">
+    <h2>Edit Information:</h2>
+    <div id="inputDetails">
+        <div>
+        <input id="inputBox" type="text">
+        <input id="checkBox" type="checkbox">
+        </div>
+        <button id="button" onclick="EditFn()">Edit</button>
+    </div>
+</body>
+<script>
+    
+    
+    async function fetchData(){
+        var id = localStorage.getItem("todoid")
+        try {
+            let res = await fetch(`http://localhost:3000/tasks/${id}`);
+            let data = await res.json()
+            
+            document.getElementById("inputBox").value = data.title
+            if(data.status == true){
+                document.getElementById("checkBox").checked = true
+            }else{
+                document.getElementById("checkBox").checked = false
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function EditFn(){
+        var id = localStorage.getItem("todoid")
+        console.log(id)
+        try {
+
+            var boolean;
+            if(document.getElementById("checkBox").checked){
+                boolean = true
+            }else{
+                boolean = false
+            }
+
+        let body = {
+            title: document.getElementById("inputBox").value,
+            status: boolean
+        }
+
+        let res = await fetch(`http://localhost:3000/tasks/${id}`,{
+            method:"PATCH",
+            body: JSON.stringify(body),
+            headers:{
+                "Content-type": "application/json"
+            }
+        })
+        window.location.href = "./index.html"
+        } catch (error) {
+            console.log(error)
+        }
+    }
+</script>
+</html>
