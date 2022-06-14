@@ -1,6 +1,7 @@
+import { getAllByAltText } from "@testing-library/react";
 import React from "react";
 import { ProductDisplay } from "./ProductDisplay";
-Parag
+
 export const ProductList = () => {
 
     const [data, setData] = React.useState([])
@@ -59,7 +60,7 @@ export const ProductList = () => {
 
     React.useEffect(() => {
         
-    if(genboo === false){
+    if(genboo == false){
         if(select === "relevant"){
             fetchData()
         }else if(select === "lth"){
