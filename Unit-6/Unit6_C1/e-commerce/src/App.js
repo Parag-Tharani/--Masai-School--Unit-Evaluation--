@@ -1,4 +1,3 @@
-import { FastField } from 'formik';
 import React from 'react';
 import './App.css';
 import { ProductForm } from './components/ProductForm';
