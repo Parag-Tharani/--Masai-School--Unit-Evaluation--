@@ -8,7 +8,7 @@ export const MovieDetails = () => {
 
     return (
         <Box>
-            {id}
+            <h1 style={{width:"100%", textAlign:'center'}}>Your id is : {id}</h1>
         </Box>
     )
 }

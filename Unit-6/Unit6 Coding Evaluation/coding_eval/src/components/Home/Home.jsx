@@ -1,5 +1,4 @@
 import React from "react";
-import "./Home.css"
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Box,Button } from "@mui/material";
@@ -16,6 +15,7 @@ export const Home = () => {
         if(!logedIn){
             navigate("/login")
         }
+        // eslint-disable-next-line
     },[logedIn])
 
 
