@@ -12,11 +12,11 @@ export const Home = () => {
     const { logedIn }  = useSelector(state => state)
 
 
-    // React.useEffect(() => {
-    //     if(!logedIn){
-    //         navigate("/login")
-    //     }
-    // },[logedIn])
+    React.useEffect(() => {
+        if(!logedIn){
+            navigate("/login")
+        }
+    },[logedIn])
 
 
     React.useEffect(() => {
