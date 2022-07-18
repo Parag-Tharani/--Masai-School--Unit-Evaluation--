@@ -10,7 +10,7 @@ async function getmeIP(req,res){
     dns.resolve4(website_name, (err, addresses) => {
         
         if (err) {
-          console.err(err);
+          console.log(err);
           return;
         }
 
