@@ -13,42 +13,60 @@ async function GetNotes(req,res){
     if(token){
         return res.send(data)
     }else{
-        return res.send("User Not Logged IN")
+        return res.send("User Not Logged In")
     }
 }
 
 async function Postnotes(req,res){
+    var token = req.headers.token;
     let { note } = req.body;
 
-    data = await noteData.create(note)
 
-    return res.send({"data":data})
+    if(token){
+        data = await noteData.create(note)
+        return res.send({"data":data})
+    }else{
+        return res.send("User Not Logged In")
+    }
+
+
+
 }
 
 
 
 async function UpdateNote(req,res){
+    var token = req.headers.token;
     let { id }  = req.params;
+    let {note: note_data} = req.body
 
+    if(token){
     let note = await noteData.findById(id)
 
-    for (const [key, value] of Object.entries(noteData)) {
+    for (const [key, value] of Object.entries(note_data)) {
         note[key] = value;
     }
 
     await note.save()
-
     return res.send("Post Updated")
+    }else{
+        return res.send("User Not Logged In")
+    }
 }
 
 
 
 async function DeleteNote(req,res){
+    var token = req.headers.token;
     let { id }  = req.params;
 
-   await noteData.findByIdAndDelete(id)
+    if(token){
+        await noteData.findByIdAndDelete(id)
+        return res.send("Post Deleted")
+    }else{
+        return res.send("User Not Logged In")
+    }
 
-    return res.send("Post Deleted")
 }
 
 module.exports = {
