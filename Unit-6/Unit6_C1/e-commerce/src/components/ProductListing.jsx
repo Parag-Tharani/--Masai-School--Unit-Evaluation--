@@ -14,14 +14,14 @@ export const ProductList = () => {
 
     const fetchData = () => {
         setLoading(true)
-        fetch(`http://localhost:4000/info?_page=${page}&_limit=${perPageLimit}`)
+        fetch(`http://localhost:8080/info?_page=${page}&_limit=${perPageLimit}`)
         .then((res) => res.json())
         .then((res) => { setData(res); setLoading(false) })
         .catch(() => { setError(true); setData([]); setLoading(false)})
     }
     const fetchDataGender = () => {
         setLoading(true)
-        fetch(`http://localhost:4000/info?gender=${gender}&_page=${page}&_limit=${perPageLimit}`)
+        fetch(`http://localhost:8080/info?gender=${gender}&_page=${page}&_limit=${perPageLimit}`)
         .then((res) => res.json())
         .then((res) => { setData(res); setLoading(false) })
         .catch(() => { setError(true); setData([]); setLoading(false)})
@@ -29,14 +29,14 @@ export const ProductList = () => {
 
     const fetchDataAccen = () =>{
         setLoading(true)
-        fetch(`http://localhost:4000/info?_sort=price&_page=${page}&_limit=${perPageLimit}`)
+        fetch(`http://localhost:8080/info?_sort=price&_page=${page}&_limit=${perPageLimit}`)
         .then((res) => res.json())
         .then((res) => { setData(res); setLoading(false) })
         .catch(() => { setError(true); setData([]); setLoading(false)})
     }
     const fetchDataAccenGender = () =>{
         setLoading(true)
-        fetch(`http://localhost:4000/info?gender=${gender}&_sort=price&_page=${page}&_limit=${perPageLimit}`)
+        fetch(`http://localhost:8080/info?gender=${gender}&_sort=price&_page=${page}&_limit=${perPageLimit}`)
         .then((res) => res.json())
         .then((res) => { setData(res); setLoading(false) })
         .catch(() => { setError(true); setData([]); setLoading(false)})
@@ -44,14 +44,14 @@ export const ProductList = () => {
 
     const fetchDataDes = () => {
         setLoading(true)
-        fetch(`http://localhost:4000/info?_sort=price&_order=desc&_page=${page}&_limit=${perPageLimit}`)
+        fetch(`http://localhost:8080/info?_sort=price&_order=desc&_page=${page}&_limit=${perPageLimit}`)
         .then((res) => res.json())
         .then((res) => { setData(res); setLoading(false) })
         .catch(() => { setError(true); setData([]); setLoading(false)})
     }
     const fetchDataDesGender = () => {
         setLoading(true)
-        fetch(`http://localhost:4000/info?gender=${gender}&_sort=price&_order=desc&_page=${page}&_limit=${perPageLimit}`)
+        fetch(`http://localhost:8080/info?gender=${gender}&_sort=price&_order=desc&_page=${page}&_limit=${perPageLimit}`)
         .then((res) => res.json())
         .then((res) => { setData(res); setLoading(false) })
         .catch(() => { setError(true); setData([]); setLoading(false)})
@@ -77,12 +77,13 @@ export const ProductList = () => {
             fetchDataDesGender()
         }
     }
+    // eslint-disable-next-line
     },[page,select,genboo,gender])
 
     const HandleDelete = (id) => {
 
         setLoading(true)
-        fetch(`http://localhost:4000/info/${ id }`,{
+        fetch(`http://localhost:8080/info/${ id }`,{
             method: "DELETE",
         })
         .then((res) => res.json())
