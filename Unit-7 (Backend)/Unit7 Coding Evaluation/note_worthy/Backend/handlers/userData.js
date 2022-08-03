@@ -48,7 +48,6 @@ async function login(req,res){
                 password: existingUser.password
             },SECRET)
 
-            localStorage.setItem("toekn",JSON.stringify(encryptionToken))
             return res.send(encryptionToken)
         }else{
             res.send("Incorrect Password")
